@@ -16,11 +16,10 @@ router.post('/', (req, res) => {
     .catch(error => console.log(error))
 })
 router.get('/:id', (req, res) => {
-  const userId = req.user._id
-  const _id = req.params.id
-  return Todo.findOne({ _id, userId })
-    .lean()
-    .then(todo => res.render('detail', { todo }))
+  // const userId = req.user.id
+  const id = req.params.id
+  return Todo.findByPk(id)
+    .then(todo => res.render('detail', { todo: todo.toJSON() }))
     .catch(error => console.log(error))
 })
 

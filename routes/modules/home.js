@@ -7,7 +7,12 @@ const User = db.User
 
 // 定義首頁路由
 router.get('/', (req, res) => {
-  res.send('hello world')
+  return Todo.findAll({
+    raw: true,
+    nest: true
+  })
+    .then((todos) => { return res.render('index', { todos: todos }) })
+    .catch((error) => { return res.status(422).json(error) })
 })
 
 // 匯出路由模組
