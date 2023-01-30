@@ -17,10 +17,10 @@ router.use('/users', users)
 router.use('/auth', auth)  // 掛載模組
 
 // 將網址結構符合 /todos 字串開頭的 request 導向 todos 模組
-router.use('/todos', authenticator, todos) // 加入驗證程序
+router.use('/todos', todos) // 加入驗證程序 authenticator
 
 // 將網址結構符合 / 字串的 request 導向 home 模組
-router.use('/', authenticator, home) // 加入驗證程序
+router.use('/', home) // 加入驗證程序 authenticator
 
 // 匯出路由器
 module.exports = router

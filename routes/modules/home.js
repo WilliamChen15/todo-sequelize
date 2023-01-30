@@ -1,6 +1,9 @@
 // 引用 Express 與 Express 路由器
 const express = require('express')
 const router = express.Router()
+const db = require('../../models')
+const Todo = db.Todo
+const User = db.User
 
 // 定義首頁路由
 router.get('/', (req, res) => {
