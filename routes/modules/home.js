@@ -3,7 +3,6 @@ const express = require('express')
 const router = express.Router()
 const db = require('../../models')
 const Todo = db.Todo
-const User = db.User
 
 // 定義首頁路由
 router.get('/', (req, res) => {
@@ -12,7 +11,7 @@ router.get('/', (req, res) => {
     nest: true
   })
     .then((todos) => { return res.render('index', { todos: todos }) })
-    .catch((error) => { return res.status(422).json(error) })
+    .catch((error) => { return res.status(422).json(error) }) // 報錯這部分啥意思
 })
 
 // 匯出路由模組
