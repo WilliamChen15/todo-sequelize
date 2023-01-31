@@ -1,21 +1,24 @@
 const express = require('express')
 const router = express.Router()
+const passport = require('passport')
+const bcrypt = require('bcryptjs')
 const db = require('../../models')
 const Todo = db.Todo
 const User = db.User
 
 
-router.get('/login', (req, res) => {
+router.get('/login', (_req, res) => {
   res.render('login')
 })
 
 // routes/modules/users.js
 // 加入 middleware，驗證 request 登入狀態
-router.post('/login', (req, res) => {
-  res.send('login')
-})
+router.post('/login', passport.authenticate('local', {
+  successRedirect: '/',
+  failureRedirect: '/users/login'
+}))
 
-router.get('/register', (req, res) => {
+router.get('/register', (_req, res) => {
   res.render('register')
 })
 
@@ -45,7 +48,9 @@ router.post('/register', (req, res) => {
 })
 
 router.get('/logout', (req, res) => {
-  res.send('logout')
+  req.logout()
+  req.flash('success_msg', '你已經成功登出。')
+  res.redirect('/users/login')
 })
 
 module.exports = router
