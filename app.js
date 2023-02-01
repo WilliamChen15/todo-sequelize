@@ -5,15 +5,20 @@ const usePassport = require('./config/passport')
 // const bodyParser = require('body-parser')  可以不用額外載入
 const methodOverride = require('method-override')
 const flash = require('connect-flash')
-const routes = require('./routes')
+
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 
 const app = express()
-const PORT = 3000
+const PORT = process.env.PORT 
+
+const routes = require('./routes')
 
 app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')
 app.use(session({
-  secret: 'ThisIsMySecret',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true
 }))
@@ -24,12 +29,12 @@ usePassport(app)
 
 app.use(flash())
 
+// 把req的資料交給res執行渲染
 app.use((req, res, next) => {
-  // console.log(req.user) 
   res.locals.isAuthenticated = req.isAuthenticated()
   res.locals.user = req.user
-  res.locals.success_msg = req.flash('success_msg')  // 設定 success_msg 訊息
-  res.locals.warning_msg = req.flash('warning_msg')  // 設定 warning_msg 訊息
+  res.locals.success_msg = req.flash('success_msg')  
+  res.locals.warning_msg = req.flash('warning_msg')  
   next()
 })
 
