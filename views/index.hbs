@@ -12,9 +12,32 @@
       <div class="col-auto">
         <a class="btn btn-secondary" href="./todos/{{ this.id }}">detail</a>
         <a class="btn btn-success" href="./todos/{{ this.id }}/edit">edit</a>
-        <form action="./todos/{{ this.id }}?_method=DELETE" method="POST" style="display: inline;">
-          <button class="btn btn-danger" type="submit">delete</button>
-        </form>
+        <button class="btn btn-danger" type="button" data-bs-toggle="modal"
+          data-bs-target="#delete{{this._id}}">delete</button>
+        <!--Delete Modal-->
+        <div class="modal fade" id="delete{{this._id}}" tabindex="-1" role="dialog"
+          aria-labelledby="Delete Message Modal" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title text-danger font-weight-bold"><i class="fas fa-exclamation-triangle"></i>注意
+                </h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body text-body">
+                你確定要刪除「<span class="font-weight-bold">{{this.name}}</span> 」這筆紀錄嗎？
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <form action="./todos/{{ this.id }}?_method=DELETE" method="POST" style="display: inline;">
+                  <input type="submit" value="刪除" class="btn btn-danger">
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </li>

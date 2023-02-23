@@ -12,13 +12,18 @@ router.get('/login', (_req, res) => {
 
 // routes/modules/users.js
 // 加入 middleware，驗證 request 登入狀態
-router.post('/login', passport.authenticate('local', {
-  successRedirect: '/',
-  failureRedirect: '/users/login'
-}))
+router.post('/login', passport.authenticate('local',
+  {
+    successRedirect: '/',
+    failureRedirect: '/users/login',
+    badRequestMessage: '信箱及密碼皆不得為空', // missing credentials
+    failureFlash: true,
+  }
+))
 
 router.get('/register', (_req, res) => {
-  res.render('register')
+  const register = true
+  res.render('register', { register })
 })
 
 router.post('/register', (req, res) => {
